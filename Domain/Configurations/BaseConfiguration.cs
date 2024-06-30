@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Configurations
 {
-    public abstract class BaseConfigurations<T> : IEntityTypeConfiguration<T> where T:BaseEntity
+    public abstract class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T:BaseEntity
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {

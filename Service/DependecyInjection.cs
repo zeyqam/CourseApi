@@ -1,7 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Service.DTOs.Admin.Rooms;
+using Service.DTOs.Educations;
 using Service.Helpers;
+using Service.Services;
+using Service.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +23,12 @@ namespace Service
             {
                 config.DisableDataAnnotationsValidation = true;
             });
-           
-
+            services.AddScoped<IValidator<RoomCreateDto>, RoomCreateDtoValidator>();
+            services.AddScoped<IValidator<RoomEditDto>, RoomEditDtoValidator>();
+            services.AddScoped < IValidator<EducationCreateDto>, EducationCreateDtoValidator>();
+            services.AddScoped<IValidator<EducationEditDto>, EducationEditDtoValidator>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IEducationService, EducationService>();
 
             return services;
         }

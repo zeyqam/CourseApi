@@ -12,8 +12,8 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240627082502_intial")]
-    partial class intial
+    [Migration("20240627151904_CreatedStudentGroupStudentGroupTables")]
+    partial class CreatedStudentGroupStudentGroupTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,7 +38,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 6, 27, 12, 25, 2, 167, DateTimeKind.Local).AddTicks(3111));
+                        .HasDefaultValue(new DateTime(2024, 6, 27, 19, 19, 4, 673, DateTimeKind.Local).AddTicks(9229));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -71,7 +71,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 6, 27, 12, 25, 2, 167, DateTimeKind.Local).AddTicks(3710));
+                        .HasDefaultValue(new DateTime(2024, 6, 27, 19, 19, 4, 674, DateTimeKind.Local).AddTicks(821));
 
                     b.Property<string>("Email")
                         .IsRequired()

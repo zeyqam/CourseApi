@@ -9,14 +9,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Configurations
 {
-    public class GroupConfigurations : BaseConfigurations<Group>
+    public class StudentConfiguration : BaseConfiguration<Student>
     {
-       
-        public override void Configure(EntityTypeBuilder<Group> builder)
+      
+        public override void Configure(EntityTypeBuilder<Student> builder)
         {
             base.Configure(builder);
             builder.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            builder.Property(e => e.Capacity).IsRequired();
+            builder.Property(e => e.Surname).IsRequired().HasMaxLength(100);
+            builder.Property(e => e.Email).IsRequired().HasMaxLength(100);
+            builder.Property(e => e.Address).IsRequired().HasMaxLength(100);
         }
     }
 }
