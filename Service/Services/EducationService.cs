@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Repository.Repositories.Interfaces;
 using Service.DTOs.Educations;
@@ -28,6 +29,11 @@ namespace Service.Services
         public async Task CreateAsync(EducationCreateDto model)
         {
             if (model == null) throw new ArgumentNullException();
+            var exists = await _educationRepo.FindBy(e => e.Name == model.Name).AnyAsync();
+            if (exists)
+            {
+                throw new InvalidOperationException("Education with this name already exists");
+            }
 
             await _educationRepo.CreateAsync(_mapper.Map<Education>(model));
         }
@@ -57,6 +63,8 @@ namespace Service.Services
             await _educationRepo.UpdateAsync(existCountry);
         }
 
+        
+
         public async Task<IEnumerable<EducationDto>> GetAllAsync()
         {
             return _mapper.Map<IEnumerable<EducationDto>>(await _educationRepo.GetAllAsync());
@@ -69,6 +77,18 @@ namespace Service.Services
             var existCountry = await _educationRepo.GetByIdAsync((int)id);
             if (existCountry == null) throw new NullReferenceException();
             return _mapper.Map<EducationDto>(existCountry);
+        }
+
+        public async Task<IEnumerable<EducationDto>> SearchByNameAsync(string name)
+        {
+            var educations = await _educationRepo.SearchByNameAsync(name);
+            return _mapper.Map<IEnumerable<EducationDto>>(educations);
+        }
+
+        public async Task<IEnumerable<EducationDto>> GetAllSortedAsync()
+        {
+            var educations = await _educationRepo.GetAllSortedAsync();
+            return _mapper.Map<IEnumerable<EducationDto>>(educations);
         }
     }
 }

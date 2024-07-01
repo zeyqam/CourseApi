@@ -9,7 +9,7 @@ namespace Repository.Repositories.Interfaces
 {
     public interface IStudentRepository : IBaseRepository<Student>
     {
-       
+        Task AddGroupAsync(StudentGroup data);
+        Task DeleteGroupAsync(int groupStudentId);
     }
 }
-

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTOs.Educations;
 using Service.Services.Interfaces;
@@ -10,12 +11,14 @@ namespace ClassApiProject.Controllers.Admin
     {
         private readonly IEducationService _educationService;
         private readonly ILogger<EducationController> _logger;
+        private readonly IMapper _mapper;
 
         public EducationController(IEducationService educationService,
-                                 ILogger<EducationController> logger)
+                                 ILogger<EducationController> logger ,IMapper mapper)
         {
             _educationService = educationService;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -37,6 +40,7 @@ namespace ClassApiProject.Controllers.Admin
         {
             try
             {
+               
                 await _educationService.CreateAsync(request);
                 return CreatedAtAction(nameof(Create), new { response = "Data succesfully created" });
             }
@@ -93,6 +97,36 @@ namespace ClassApiProject.Controllers.Admin
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string name)
+        {
+            try
+            {
+                var educations = await _educationService.SearchByNameAsync(name);
+                return Ok(_mapper.Map<IEnumerable<EducationDto>>(educations));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in Search method");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error");
+            }
+        }
+
+
+        [HttpGet("sort")]
+        public async Task<IActionResult> Sort()
+        {
+            try
+            {
+                var educations = await _educationService.GetAllSortedAsync();
+                return Ok(_mapper.Map<IEnumerable<EducationDto>>(educations));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in Sort method");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error");
             }
         }
     }

@@ -14,6 +14,10 @@ namespace Service.Services.Interfaces
         Task<EducationDto> GetByIdAsync(int? id);
         Task EditAsync(int? id, EducationEditDto model);
         Task DeleteAsync(int? id);
+        Task<IEnumerable<EducationDto>> GetAllSortedAsync();
+        Task<IEnumerable<EducationDto>> SearchByNameAsync(string name);
+
 
     }
 }
+

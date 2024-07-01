@@ -20,7 +20,8 @@ namespace Repository
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IEducationRepository, EducationRepository>();
-
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IStudentRepository,StudentRepository>();
 
             return services;
         }

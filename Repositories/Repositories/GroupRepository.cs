@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.Data;
 using Repository.Repositories.Interfaces;
 using System;
@@ -14,6 +15,31 @@ namespace Repository.Repositories
         public GroupRepository(AppDbContext context) : base(context)
         {
 
+        }
+
+        public async Task<IEnumerable<Group>> GetAllForUIAsync()
+        {
+            return await _context.Groups
+
+
+                .Include(m => m.Room)
+            .Include(m => m.Education)
+            .Include(m => m.StudentGroups)
+            .ThenInclude(sg => sg.Student)
+            .Include(m => m.TeacherGroups)
+            .ThenInclude(tg => tg.Teacher)
+            .AsNoTracking()
+            .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Group>> GetAllWithIncludesAsync()
+        {
+             return await _context.Groups
+                    .Include(m => m.Room)
+                    .Include(m => m.Education)
+                    .AsNoTracking()
+                    .ToListAsync();
+            
         }
     }
 }
